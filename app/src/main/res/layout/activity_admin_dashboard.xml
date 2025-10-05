@@ -36,13 +36,11 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 android:layout_marginBottom="16dp">
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/card_gradient_background"
                     android:padding="16dp">
-
                     <TextView
                         android:id="@+id/teacher_title"
                         android:layout_width="wrap_content"
@@ -51,7 +49,6 @@
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/teacher_desc"
                         android:layout_width="wrap_content"
@@ -59,7 +56,6 @@
                         android:layout_below="@id/teacher_title"
                         android:text="Add, edit, and manage teacher profiles."
                         android:textColor="@color/white_transparent" />
-
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -67,15 +63,14 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         app:tint="@color/white" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/teacher_desc"
                         android:layout_marginTop="16dp"
                         android:orientation="horizontal">
-
                         <Button
+                            android:id="@+id/addTeacherButton"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -85,8 +80,8 @@
                             android:text="+ Add New"
                             android:textColor="@color/primary_blue"
                             app:strokeColor="@color/primary_blue" />
-
                         <Button
+                            android:id="@+id/manageTeacherButton"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -109,7 +104,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/card_gradient_background"
                     android:padding="16dp">
-
                     <TextView
                         android:id="@+id/student_title"
                         android:layout_width="wrap_content"
@@ -118,7 +112,6 @@
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/student_desc"
                         android:layout_width="wrap_content"
@@ -126,7 +119,6 @@
                         android:layout_below="@id/student_title"
                         android:text="Manage student records and academic progress."
                         android:textColor="@color/white_transparent" />
-
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -134,14 +126,12 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         app:tint="@color/white" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/student_desc"
                         android:layout_marginTop="16dp"
                         android:orientation="horizontal">
-
                         <Button
                             android:id="@+id/btn_add_student_dashboard"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -153,7 +143,6 @@
                             android:text="+ Add New"
                             android:textColor="@color/primary_blue"
                             app:strokeColor="@color/primary_blue" />
-
                         <Button
                             android:id="@+id/btn_manage_students_dashboard"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -178,7 +167,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/card_gradient_background"
                     android:padding="16dp">
-
                     <TextView
                         android:id="@+id/notification_title"
                         android:layout_width="wrap_content"
@@ -187,7 +175,6 @@
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/notification_desc"
                         android:layout_width="wrap_content"
@@ -195,7 +182,6 @@
                         android:layout_below="@id/notification_title"
                         android:text="Send important updates to the college community."
                         android:textColor="@color/white_transparent" />
-
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -203,8 +189,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         app:tint="@color/white" />
-
                     <Button
+                        android:id="@+id/sendNotificationButton"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -226,7 +212,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/card_gradient_background"
                     android:padding="16dp">
-
                     <TextView
                         android:id="@+id/schedule_title"
                         android:layout_width="wrap_content"
@@ -235,7 +220,6 @@
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/schedule_desc"
                         android:layout_width="wrap_content"
@@ -243,7 +227,6 @@
                         android:layout_below="@id/schedule_title"
                         android:text="Manage and update class schedules."
                         android:textColor="@color/white_transparent" />
-
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -251,8 +234,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         app:tint="@color/white" />
-
                     <Button
+                        android:id="@+id/openSchedulerButton"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

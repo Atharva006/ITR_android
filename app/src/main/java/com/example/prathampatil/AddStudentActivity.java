@@ -8,7 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.prathampatil.data.StudentRepository;
@@ -18,10 +19,11 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class AddStudentActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
-
     private ImageView studentPhoto;
     private TextInputEditText etStudentName, etPassword, etClass, etDivision, etDepartment, etEmail, etDob, etBloodGroup, etCity;
+
+    // The new, modern way to handle activity results
+    private ActivityResultLauncher<String> mGetContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +31,7 @@ public class AddStudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_student);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         // Initialize UI components
         studentPhoto = findViewById(R.id.student_photo);
@@ -50,40 +48,29 @@ public class AddStudentActivity extends AppCompatActivity {
         Button btnUploadPhoto = findViewById(R.id.btn_upload_photo);
         Button btnAddStudent = findViewById(R.id.btn_add_student);
 
-        View.OnClickListener photoClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImageChooser();
-            }
-        };
+        // Initialize the ActivityResultLauncher
+        mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                uri -> {
+                    // This is the callback where we handle the selected image
+                    if (uri != null) {
+                        studentPhoto.setImageURI(uri);
+                        Toast.makeText(this, "Photo selected!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        View.OnClickListener photoClickListener = v -> openImageChooser();
         btnUploadPhoto.setOnClickListener(photoClickListener);
         studentPhoto.setOnClickListener(photoClickListener);
 
-        btnAddStudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveStudentData();
-            }
-        });
+        btnAddStudent.setOnClickListener(v -> saveStudentData());
     }
 
     private void openImageChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        // Launch the image picker using the new launcher
+        mGetContent.launch("image/*");
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-            studentPhoto.setImageURI(imageUri);
-            Toast.makeText(this, "Photo selected!", Toast.LENGTH_SHORT).show();
-        }
-    }
+    // The old onActivityResult method is no longer needed and has been removed.
 
     private void saveStudentData() {
         String studentName = etStudentName.getText().toString();
@@ -98,17 +85,10 @@ public class AddStudentActivity extends AppCompatActivity {
             return;
         }
 
-        // Pass the studentName as the username
-        Student newStudent = new Student(studentName, password, studentClass + studentDivision, studentDepartment, studentEmail);
+        Student newStudent = new Student(studentName, password, studentClass + " " + studentDivision, studentDepartment, studentEmail);
         StudentRepository.getInstance().addStudent(newStudent);
 
         Toast.makeText(this, "Student added successfully!", Toast.LENGTH_SHORT).show();
         finish();
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }

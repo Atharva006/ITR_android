@@ -10,8 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.prathampatil.data.StudentRepository;
-import com.example.prathampatil.model.Student;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,38 +67,21 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        switch (selectedRole) {
-            case "Admin":
-                if (username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
-                    Toast.makeText(this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(this, "Invalid Admin credentials.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case "Student":
-                Student loggedInStudent = null;
-                for (Student student : StudentRepository.getInstance().getStudentList()) {
-                    if (student.getUsername().equals(username) && student.getPassword().equals(password)) {
-                        loggedInStudent = student;
-                        break;
-                    }
-                }
-                if (loggedInStudent != null) {
-                    Toast.makeText(this, "Student Login Successful!", Toast.LENGTH_SHORT).show();
-                    // TODO: Redirect to Student Dashboard
-                } else {
-                    Toast.makeText(this, "Invalid Student credentials.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case "Teacher":
-                Toast.makeText(this, "Login for " + selectedRole + " is not yet implemented.", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                Toast.makeText(this, "Please select a valid role.", Toast.LENGTH_SHORT).show();
-                break;
+        // We only handle Admin login for now, as requested.
+        if (selectedRole.equals("Admin")) {
+            if (username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
+                Toast.makeText(this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
+
+                // Redirect to Admin Dashboard Activity
+                Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
+                startActivity(intent);
+                finish(); // Prevent user from going back to login screen
+            } else {
+                Toast.makeText(this, "Invalid Admin credentials.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Placeholder for other roles
+            Toast.makeText(this, "Login for " + selectedRole + " is not yet implemented.", Toast.LENGTH_SHORT).show();
         }
     }
 }
