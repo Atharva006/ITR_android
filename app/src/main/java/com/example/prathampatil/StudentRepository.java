@@ -22,6 +22,10 @@ public class StudentRepository {
         return studentList;
     }
 
+    public static ArrayList<Student> getStudents() {
+        return studentList;
+    }
+
     public static void addStudent(Student student) {
         if (studentList != null) {
             studentList.add(student);
@@ -41,5 +45,14 @@ public class StudentRepository {
             }
         }
         return null;
+    }
+
+    public static int getStudentCount() {
+        return studentList.size();
+    }
+
+    public static void clearStudents() {
+        studentList.clear();
+        initialized = false;
     }
 }
