@@ -1,35 +1,50 @@
-package com.example.prathampatil.adapter;
+package com.example.prathampatil;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.prathampatil.R;
-import com.example.prathampatil.model.Student;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.AttendanceViewHolder> {
 
-    private List<Student> studentList;
+    private ArrayList<Student> studentList;
+    private Map<String, Boolean> attendanceMap;
 
-    public AttendanceAdapter(List<Student> studentList) {
+    public AttendanceAdapter(ArrayList<Student> studentList) {
         this.studentList = studentList;
+        this.attendanceMap = new HashMap<>();
+        // Initialize all students as absent
+        for (Student student : studentList) {
+            attendanceMap.put(student.getUsername(), false);
+        }
     }
 
     @NonNull
     @Override
     public AttendanceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attendance, parent, false);
+        // Use simple list item layout instead of custom layout
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
         return new AttendanceViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AttendanceViewHolder holder, int position) {
         Student student = studentList.get(position);
-        holder.studentName.setText(student.getName());
+        holder.textView.setText(student.getName() + " - " + student.getRollNumber());
+
+        holder.checkBox.setOnCheckedChangeListener(null);
+        holder.checkBox.setChecked(attendanceMap.get(student.getUsername()));
+
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            attendanceMap.put(student.getUsername(), isChecked);
+        });
     }
 
     @Override
@@ -37,14 +52,30 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
         return studentList.size();
     }
 
+    public Map<String, Boolean> getAttendanceMap() {
+        return attendanceMap;
+    }
+
+    public int getPresentCount() {
+        int count = 0;
+        for (Boolean isPresent : attendanceMap.values()) {
+            if (isPresent) count++;
+        }
+        return count;
+    }
+
+    public int getAbsentCount() {
+        return studentList.size() - getPresentCount();
+    }
+
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
-        TextView studentName;
-        SwitchCompat attendanceSwitch;
+        TextView textView;
+        CheckBox checkBox;
 
         public AttendanceViewHolder(@NonNull View itemView) {
             super(itemView);
-            studentName = itemView.findViewById(R.id.student_name_attendance);
-            attendanceSwitch = itemView.findViewById(R.id.attendance_switch);
+            textView = itemView.findViewById(android.R.id.text1);
+            checkBox = new CheckBox(itemView.getContext());
         }
     }
 }

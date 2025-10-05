@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,40 +16,46 @@
         android:theme="@style/Theme.ITR_android"
         tools:targetApi="31">
 
+        <!-- Main Activity (Login) -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.ITR_android">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-        <activity
-            android:name=".AddTeacherActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TeacherListActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ScheduleActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".NotificationActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".AdminDashboardActivity"
-            android:exported="false" />
-
+        <!-- Welcome Activity -->
         <activity
             android:name=".WelcomeActivity"
             android:exported="false" />
+
+        <!-- Dashboard Activities -->
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".TeacherDashboardActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".StudentDashboardActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <!-- Management Activities -->
         <activity
             android:name=".AddStudentActivity"
+            android:exported="false"
+            android:parentActivityName=".AdminDashboardActivity" />
+
+        <activity
+            android:name=".AddTeacherActivity"
             android:exported="false"
             android:parentActivityName=".AdminDashboardActivity" />
 
@@ -56,10 +65,56 @@
             android:parentActivityName=".AdminDashboardActivity" />
 
         <activity
-            android:name=".TeacherDashboardActivity"
-            android:exported="false" />
+            android:name=".TeacherListActivity"
+            android:exported="false"
+            android:parentActivityName=".AdminDashboardActivity" />
+
+        <!-- Attendance Activities -->
         <activity
-            android:name=".StudentDashboardActivity"
+            android:name=".AttendanceActivity"
+            android:exported="false"
+            android:parentActivityName=".TeacherDashboardActivity" />
+
+        <activity
+            android:name=".MarkAttendanceActivity"
+            android:exported="false"
+            android:parentActivityName=".TeacherDashboardActivity" />
+
+        <activity
+            android:name=".ViewAttendanceActivity"
+            android:exported="false"
+            android:parentActivityName=".StudentDashboardActivity" />
+
+        <!-- Assignment Activities -->
+        <activity
+            android:name=".AssignmentsActivity"
+            android:exported="false"
+            android:parentActivityName=".StudentDashboardActivity" />
+
+        <activity
+            android:name=".SendAssignmentActivity"
+            android:exported="false"
+            android:parentActivityName=".TeacherDashboardActivity" />
+
+        <!-- Timetable Activities -->
+        <activity
+            android:name=".TimetableActivity"
+            android:exported="false"
+            android:parentActivityName=".TeacherDashboardActivity" />
+
+        <activity
+            android:name=".ViewTimetableActivity"
+            android:exported="false"
+            android:parentActivityName=".StudentDashboardActivity" />
+
+        <activity
+            android:name=".ScheduleActivity"
+            android:exported="false"
+            android:parentActivityName=".TeacherDashboardActivity" />
+
+        <!-- Notification Activity -->
+        <activity
+            android:name=".NotificationActivity"
             android:exported="false" />
 
     </application>

@@ -1,6 +1,5 @@
-package com.example.prathampatil.data;
+package com.example.prathampatil;
 
-import com.example.prathampatil.model.AttendanceItem;
 import java.util.ArrayList;
 import java.util.List;
 

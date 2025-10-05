@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prathampatil.data.TimetableRepository;
-import com.example.prathampatil.model.TimetableItem;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

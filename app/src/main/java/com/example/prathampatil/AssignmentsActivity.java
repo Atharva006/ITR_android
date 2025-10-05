@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 
-import com.example.prathampatil.data.AssignmentsRepository;
-import com.example.prathampatil.model.AssignmentsItem;
-
 import java.util.List;
 
 public class AssignmentsActivity extends AppCompatActivity {

@@ -1,106 +1,50 @@
 package com.example.prathampatil;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.appbar.MaterialToolbar;
-
-import com.example.prathampatil.data.AttendanceRepository;
-import com.example.prathampatil.model.AttendanceItem;
-
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AttendanceActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private AttendanceAdapter adapter;
+    private ListView listView;
+    private Button addAttendanceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attendance);
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar_attendance);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        // Create views programmatically
+        listView = new ListView(this);
+        addAttendanceButton = new Button(this);
+        addAttendanceButton.setText("Mark Attendance");
 
-        recyclerView = findViewById(R.id.attendance_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setContentView(listView);
 
-        // Use model AttendanceItem directly
-        List<AttendanceItem> attendanceList = AttendanceRepository.getInstance().getAttendanceList();
-
-        adapter = new AttendanceAdapter(attendanceList);
-        recyclerView.setAdapter(adapter);
+        setupData();
+        setupButton();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+    private void setupData() {
+        ArrayList<String> subjects = new ArrayList<>(Arrays.asList(
+                "Mathematics - 87.5%",
+                "Physics - 84.2%",
+                "Chemistry - 90.5%",
+                "English - 85.7%"
+        ));
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, subjects);
+        listView.setAdapter(adapter);
     }
 
-    public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.ViewHolder> {
-
-        private List<AttendanceItem> attendanceList;
-
-        public AttendanceAdapter(List<AttendanceItem> attendanceList) {
-            this.attendanceList = attendanceList;
-        }
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_attendance_card, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            AttendanceItem item = attendanceList.get(position);
-
-            holder.subjectName.setText(item.getSubjectName());
-            holder.attendanceDetails.setText("Classes: " + item.getClassesAttended() + "/" + item.getTotalClasses());
-
-            // Compute percentage
-            int percentage = 0;
-            if (item.getTotalClasses() > 0) {
-                percentage = (int) (((double) item.getClassesAttended() / item.getTotalClasses()) * 100);
-            }
-            holder.attendancePercentage.setText(percentage + "%");
-
-            // Set color based on percentage
-            if (percentage < 75) {
-                holder.attendancePercentage.setTextColor(getResources().getColor(R.color.red));
-            } else {
-                holder.attendancePercentage.setTextColor(getResources().getColor(R.color.black));
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return attendanceList.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            TextView subjectName;
-            TextView attendanceDetails;
-            TextView attendancePercentage;
-
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-                subjectName = itemView.findViewById(R.id.subject_name_text_view);
-                attendanceDetails = itemView.findViewById(R.id.attendance_details_text_view);
-                attendancePercentage = itemView.findViewById(R.id.attendance_percentage_text_view);
-            }
-        }
+    private void setupButton() {
+        addAttendanceButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AttendanceActivity.this, MarkAttendanceActivity.class);
+            startActivity(intent);
+        });
     }
 }

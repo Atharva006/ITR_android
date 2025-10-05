@@ -1,4 +1,4 @@
-package com.example.prathampatil.model;
+package com.example.prathampatil;
 
 public class AttendanceItem {
     private String subjectName;
