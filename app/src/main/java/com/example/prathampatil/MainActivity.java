@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.prathampatil.data.StudentRepository;
 import com.example.prathampatil.model.Student;
 import com.google.android.material.textfield.TextInputEditText;
@@ -81,7 +82,10 @@ public class MainActivity extends AppCompatActivity {
         for (Teacher teacher : TeacherDataStore.teachers) {
             if (teacher.getFullName().equalsIgnoreCase(username) && teacher.getPassword().equals(password)) {
                 Toast.makeText(this, "Teacher Login Successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+
+                // **** THIS IS THE FIX ****
+                // Changed WelcomeActivity.class to TeacherDashboardActivity.class
+                Intent intent = new Intent(MainActivity.this, TeacherDashboardActivity.class);
                 intent.putExtra("TEACHER_NAME", teacher.getFullName());
                 startActivity(intent);
                 finish();
@@ -95,8 +99,10 @@ public class MainActivity extends AppCompatActivity {
         for (Student student : StudentRepository.getInstance().getStudentList()) {
             if (student.getUsername().equalsIgnoreCase(username) && student.getPassword().equals(password)) {
                 Toast.makeText(this, "Student Login Successful!", Toast.LENGTH_SHORT).show();
+
+                // For now, students will still see the simple welcome page.
                 Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-                intent.putExtra("TEACHER_NAME", student.getName()); // Reusing the same extra key for simplicity
+                intent.putExtra("TEACHER_NAME", student.getName());
                 startActivity(intent);
                 finish();
                 return;

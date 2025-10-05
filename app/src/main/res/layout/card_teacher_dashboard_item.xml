@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/card_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_mark_attendance"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:tint="@color/primary_blue"/>
+
+        <TextView
+            android:id="@+id/card_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark Attendance"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_color_dark"/>
+
+        <TextView
+            android:id="@+id/card_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_title"
+            android:text="Mark daily student attendance"
+            android:textColor="@color/text_color_light"/>
+
+        <Button
+            android:id="@+id/card_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_description"
+            android:layout_marginTop="16dp"
+            android:text="Mark"
+            android:backgroundTint="@color/primary_blue"
+            android:textColor="@color/white"
+            app:cornerRadius="16dp"/>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
