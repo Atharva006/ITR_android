@@ -1,4 +1,6 @@
-package com.example.prathampatil;
+package com.example.prathampatil.data;
+
+import com.example.prathampatil.Student;
 
 import java.util.ArrayList;
 

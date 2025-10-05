@@ -1,48 +1,50 @@
-package com.example.prathampatil;
+package com.example.prathampatil.model;
 
-import java.io.Serializable;
+public class Teacher {
 
-public class Teacher implements Serializable {
-    private String fullName;
-    private String username;
-    private String password;
-    private String email;
-    private String phone;
+    private String name;
     private String subject;
-    private String department;
+    private int experience; // in years
 
-    public Teacher() {}
-
-    public Teacher(String fullName, String username, String password, String email, String phone, String subject, String department) {
-        this.fullName = fullName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
+    // Constructor
+    public Teacher(String name, String subject, int experience) {
+        this.name = name;
         this.subject = subject;
-        this.department = department;
+        this.experience = experience;
     }
 
-    // Getters
-    public String getFullName() { return fullName; }
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
-    public String getEmail() { return email; }
-    public String getPhone() { return phone; }
-    public String getSubject() { return subject; }
-    public String getDepartment() { return department; }
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
 
-    // Setters
-    public void setFullName(String fullName) { this.fullName = fullName; }
-    public void setUsername(String username) { this.username = username; }
-    public void setPassword(String password) { this.password = password; }
-    public void setEmail(String email) { this.email = email; }
-    public void setPhone(String phone) { this.phone = phone; }
-    public void setSubject(String subject) { this.subject = subject; }
-    public void setDepartment(String department) { this.department = department; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    // Optional: toString() for easy debugging
     @Override
     public String toString() {
-        return fullName + " (" + subject + ")";
+        return "Teacher{" +
+                "name='" + name + '\'' +
+                ", subject='" + subject + '\'' +
+                ", experience=" + experience +
+                '}';
     }
 }

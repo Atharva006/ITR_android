@@ -3,10 +3,13 @@ package com.example.prathampatil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
 
 public class TeacherDashboardActivity extends AppCompatActivity {
 
@@ -15,37 +18,45 @@ public class TeacherDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_dashboard);
 
-        // Set the teacher's name in the header
-        TextView teacherNameDashboard = findViewById(R.id.teacher_name_dashboard);
-        String teacherName = getIntent().getStringExtra("TEACHER_NAME");
-        if (teacherName != null && !teacherName.isEmpty()) {
-            teacherNameDashboard.setText(teacherName);
+        // Get the teacher data from the intent
+        Intent intent = getIntent();
+        String teacherName = intent.getStringExtra("TEACHER_NAME");
+        String teacherDetails = intent.getStringExtra("TEACHER_DETAILS");
+
+        // Find the views
+        TextView teacherNameTextView = findViewById(R.id.teacher_name_text_view);
+        TextView teacherDetailsTextView = findViewById(R.id.teacher_details_text_view);
+        MaterialCardView markAttendanceCard = findViewById(R.id.card_mark_attendance);
+        MaterialCardView sendAssignmentCard = findViewById(R.id.card_send_assignment);
+        MaterialCardView viewTimetableCard = findViewById(R.id.card_view_timetable_teacher);
+
+        // Set the teacher's details
+        if (teacherName != null) {
+            teacherNameTextView.setText(teacherName);
+        }
+        if (teacherDetails != null) {
+            teacherDetailsTextView.setText(teacherDetails);
         }
 
-        // --- Setup Dashboard Cards ---
-        setupDashboardCard(R.id.card_mark_attendance, R.drawable.ic_mark_attendance, "Mark Attendance", "Mark daily student attendance", "Mark", MarkAttendanceActivity.class);
-        setupDashboardCard(R.id.card_send_assignment, R.drawable.ic_send_assignment, "Send Assignment", "Send assignments to students", "Send", SendAssignmentActivity.class);
-        setupDashboardCard(R.id.card_attendance_report, R.drawable.ic_attendance_report, "View Attendance Report", "Check student attendance", "View", ViewAttendanceActivity.class);
-        setupDashboardCard(R.id.card_view_timetable, R.drawable.ic_view_timetable, "View Timetable", "Check your class schedule", "View", ViewTimetableActivity.class);
-    }
+        // Set up the toolbar with back navigation
+        MaterialToolbar toolbar = findViewById(R.id.toolbar_teacher);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
 
-    private void setupDashboardCard(int cardId, int iconId, String title, String description, String buttonText, Class<?> activityClass) {
-        View cardView = findViewById(cardId);
-        ImageView icon = cardView.findViewById(R.id.card_icon);
-        TextView cardTitle = cardView.findViewById(R.id.card_title);
-        TextView cardDescription = cardView.findViewById(R.id.card_description);
-        Button cardButton = cardView.findViewById(R.id.card_button);
+        // Set up click listeners for the cards
+        markAttendanceCard.setOnClickListener(v -> {
+            Intent markAttendanceIntent = new Intent(TeacherDashboardActivity.this, MarkAttendanceActivity.class);
+            startActivity(markAttendanceIntent);
+        });
 
-        // Set the content for each part of the card
-        icon.setImageResource(iconId);
-        cardTitle.setText(title);
-        cardDescription.setText(description);
-        cardButton.setText(buttonText);
+        sendAssignmentCard.setOnClickListener(v -> {
+            Intent sendAssignmentIntent = new Intent(TeacherDashboardActivity.this, SendAssignmentActivity.class);
+            startActivity(sendAssignmentIntent);
+        });
 
-        // Set the click listener to open the correct activity
-        cardButton.setOnClickListener(v -> {
-            Intent intent = new Intent(TeacherDashboardActivity.this, activityClass);
-            startActivity(intent);
+        viewTimetableCard.setOnClickListener(v -> {
+            Intent viewTimetableIntent = new Intent(TeacherDashboardActivity.this, TimetableActivity.class);
+            startActivity(viewTimetableIntent);
         });
     }
 }

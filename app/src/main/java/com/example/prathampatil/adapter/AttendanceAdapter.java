@@ -1,4 +1,4 @@
-package com.example.prathampatil;
+package com.example.prathampatil.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.prathampatil.Student;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
