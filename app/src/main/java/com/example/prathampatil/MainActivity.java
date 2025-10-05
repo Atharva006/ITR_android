@@ -6,9 +6,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.prathampatil.data.StudentRepository;
-import com.example.prathampatil.Student;
+import com.example.prathampatil.data.TeacherDataStore;
+import com.example.prathampatil.model.Student;
+import com.example.prathampatil.model.Teacher;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
 
         setupRoleSpinner();
+
         loginButton.setOnClickListener(v -> performLogin());
     }
 
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginAsTeacher(String username, String password) {
-        for (Teacher teacher : TeacherDataStore.teachers) {
+        for (Teacher teacher : TeacherDataStore.getInstance().getTeacherList()) {
             if (teacher.getFullName().equalsIgnoreCase(username) && teacher.getPassword().equals(password)) {
                 Toast.makeText(this, "Teacher Login Successful!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, TeacherDashboardActivity.class);

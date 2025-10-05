@@ -1,58 +1,28 @@
-package com.example.prathampatil;
+package com.example.prathampatil.data;
 
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.prathampatil.model.Teacher;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AddTeacherActivity extends AppCompatActivity {
+public class TeacherDataStore {
 
-    private TextInputEditText fullName, email, password, subjects, experience;
+    private static TeacherDataStore instance; // Singleton instance
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_teacher);
+    private final List<Teacher> teacherList = new ArrayList<>();
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar_add_teacher);
-        toolbar.setNavigationOnClickListener(v -> finish());
-
-        // Get references to all our input fields
-        fullName = findViewById(R.id.edit_full_name);
-        email = findViewById(R.id.edit_email);
-        password = findViewById(R.id.edit_password);
-        subjects = findViewById(R.id.edit_subjects);
-        experience = findViewById(R.id.edit_experience);
-        Button addTeacherButton = findViewById(R.id.add_teacher_button);
-
-        // Set the click listener for the button
-        addTeacherButton.setOnClickListener(v -> saveTeacherData());
+    private TeacherDataStore() {
+        teacherList.add(new Teacher("John Doe", "johndoe", "password123", "Computer Science", "5 years"));
+        teacherList.add(new Teacher("Jane Smith", "janesmith", "pass456", "Mathematics", "3 years"));
     }
 
-    private void saveTeacherData() {
-        // Read the text from each input field
-        String nameStr = fullName.getText().toString();
-        String emailStr = email.getText().toString();
-        String passwordStr = password.getText().toString();
-        String subjectsStr = subjects.getText().toString();
-        String experienceStr = experience.getText().toString();
-
-        // Basic validation
-        if (nameStr.isEmpty() || emailStr.isEmpty() || passwordStr.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
-            return;
+    public static TeacherDataStore getInstance() {
+        if (instance == null) {
+            instance = new TeacherDataStore();
         }
+        return instance;
+    }
 
-        // Create a new Teacher object with the data
-        Teacher newTeacher = new Teacher(nameStr, emailStr, passwordStr, subjectsStr, experienceStr);
-
-        // Add the new teacher to our shared data store
-        TeacherDataStore.teachers.add(newTeacher);
-
-        // Show a success message and close the screen
-        Toast.makeText(this, "Teacher Added Successfully", Toast.LENGTH_SHORT).show();
-        finish();
+    public List<Teacher> getTeacherList() {
+        return teacherList;
     }
 }
