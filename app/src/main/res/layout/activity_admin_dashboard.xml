@@ -143,6 +143,7 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:id="@+id/btn_add_student_dashboard"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -154,6 +155,7 @@
                             app:strokeColor="@color/primary_blue" />
 
                         <Button
+                            android:id="@+id/btn_manage_students_dashboard"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
