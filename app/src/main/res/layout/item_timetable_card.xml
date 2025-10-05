@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
+
+    <View
+        android:id="@+id/timeline_bar"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/primary_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Class Time -->
+    <TextView
+        android:id="@+id/timetable_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/text_color_dark"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/timeline_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="9:00 AM - 10:00 AM" />
+
+    <!-- Card containing subject and teacher/day -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timetable_time"
+        app:layout_constraintTop_toTopOf="@id/timetable_time">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Subject Name -->
+            <TextView
+                android:id="@+id/timetable_subject_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Computer Science" />
+
+            <!-- Day / Teacher -->
+            <TextView
+                android:id="@+id/timetable_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_color_light"
+                tools:text="Monday" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

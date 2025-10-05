@@ -22,4 +22,8 @@
     <color name="light_gray">#D3D3D3</color>
 
     <color name="input_field_blue">#E0F2FE</color>
+    <color name="green_submitted">#4CAF50</color>
+    <color name="yellow_pending">#FFC107</color>
+    <color name="blue_graded">#2196F3</color>
+    <color name="gray_light">#E0E0E0</color>
 </resources>

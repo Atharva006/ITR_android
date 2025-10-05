@@ -11,6 +11,8 @@ public class StudentRepository {
 
     private StudentRepository() {
         studentList = new ArrayList<>();
+        // Hardcoded data has been removed.
+        // New students will be added via the AddStudentActivity.
     }
 
     public static synchronized StudentRepository getInstance() {
