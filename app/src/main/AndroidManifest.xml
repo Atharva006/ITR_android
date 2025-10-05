@@ -55,5 +55,12 @@
             android:exported="false"
             android:parentActivityName=".AdminDashboardActivity" />
 
+        <activity
+            android:name=".TeacherDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentDashboardActivity"
+            android:exported="false" />
+
     </application>
 </manifest>
