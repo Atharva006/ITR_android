@@ -2,14 +2,13 @@ package com.example.prathampatil;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.prathampatil.data.StudentRepository;
+import com.example.prathampatil.model.Student;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,9 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private AutoCompleteTextView roleSpinner;
     private TextInputEditText usernameEditText;
     private TextInputEditText passwordEditText;
-    private Button loginButton;
 
-    // Hardcoded credentials for demonstration
     private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PASSWORD = "admin";
 
@@ -28,32 +25,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize UI components
         roleSpinner = findViewById(R.id.roleSpinner);
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
-        loginButton = findViewById(R.id.loginButton);
+        Button loginButton = findViewById(R.id.loginButton);
 
-        // Setup the role spinner
         setupRoleSpinner();
-
-        // Set Login button click listener
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performLogin();
-            }
-        });
+        loginButton.setOnClickListener(v -> performLogin());
     }
 
     private void setupRoleSpinner() {
-        // Options for the dropdown
         String[] roles = new String[]{"Admin", "Student", "Teacher"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                roles
-        );
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, roles);
         roleSpinner.setAdapter(adapter);
     }
 
@@ -67,21 +50,58 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // We only handle Admin login for now, as requested.
-        if (selectedRole.equals("Admin")) {
-            if (username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
-                Toast.makeText(this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
-
-                // Redirect to Admin Dashboard Activity
-                Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
-                startActivity(intent);
-                finish(); // Prevent user from going back to login screen
-            } else {
-                Toast.makeText(this, "Invalid Admin credentials.", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // Placeholder for other roles
-            Toast.makeText(this, "Login for " + selectedRole + " is not yet implemented.", Toast.LENGTH_SHORT).show();
+        switch (selectedRole) {
+            case "Admin":
+                loginAsAdmin(username, password);
+                break;
+            case "Student":
+                loginAsStudent(username, password);
+                break;
+            case "Teacher":
+                loginAsTeacher(username, password);
+                break;
+            default:
+                Toast.makeText(this, "Please select a valid role.", Toast.LENGTH_SHORT).show();
+                break;
         }
+    }
+
+    private void loginAsAdmin(String username, String password) {
+        if (username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
+            Toast.makeText(this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Invalid Admin credentials.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loginAsTeacher(String username, String password) {
+        for (Teacher teacher : TeacherDataStore.teachers) {
+            if (teacher.getFullName().equalsIgnoreCase(username) && teacher.getPassword().equals(password)) {
+                Toast.makeText(this, "Teacher Login Successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                intent.putExtra("TEACHER_NAME", teacher.getFullName());
+                startActivity(intent);
+                finish();
+                return;
+            }
+        }
+        Toast.makeText(this, "Invalid Teacher credentials.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void loginAsStudent(String username, String password) {
+        for (Student student : StudentRepository.getInstance().getStudentList()) {
+            if (student.getUsername().equalsIgnoreCase(username) && student.getPassword().equals(password)) {
+                Toast.makeText(this, "Student Login Successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                intent.putExtra("TEACHER_NAME", student.getName()); // Reusing the same extra key for simplicity
+                startActivity(intent);
+                finish();
+                return;
+            }
+        }
+        Toast.makeText(this, "Invalid Student credentials.", Toast.LENGTH_SHORT).show();
     }
 }
